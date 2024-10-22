@@ -23,5 +23,13 @@ export async function getPeople() {
     return rows;
 }
 
-// const result = await getPeople()
+export async function getPerson(id) {
+    const [rows] = await pool.query(`
+    SELECT * 
+    FROM people 
+    WHERE id = ?`, [id])
+    return rows[0];
+}
+
+// const result = await getPerson(100)
 // console.log(result)

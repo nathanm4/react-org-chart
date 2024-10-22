@@ -1,12 +1,20 @@
 import express from 'express';
 
-import { getPeople } from './database.js';
+import { getPeople, getPerson } from './database.js';
 
 const app = express();
 
 app.get("/people", async (req, res) => {
     const people = await getPeople();
     res.send(people);
+})
+
+app.get("/people/:id", async (req, res) => {
+    const person = await getPerson(req.params.id);
+    if (!person) {
+        return res.status(404).send("Person not found");
+    }
+    res.send(person);
 })
 
 app.use((err, req, res, next) => {
