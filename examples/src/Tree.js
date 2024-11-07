@@ -1,6 +1,37 @@
+import React from 'react'
+import { useState, useEffect } from 'react';
+import OrgChart from '@unicef/react-org-chart'
+
 import avatarPersonnel from './assets/avatar-personnel.svg'
 import nathanPicture from './assets/nathan-picture.svg'
 import earth from './assets/earth.jpg'
+
+export const tree6 = (async () => {
+  try {
+    const response = await fetch('http://localhost:8080/people/36');
+    const data = await response.json();
+
+    return [{
+      id: data.id,
+      person: {
+        id: data.id,
+        avatar: data.avatar || avatarPersonnel,
+        department: data.department || '',
+        name: data.name,
+        title: data.title,
+        totalReports: data.totalReports || 0,
+      },
+      hasChild: data.hasChild || false,
+      hasParent: true,
+      children: [],
+    }];
+  } catch (error) {
+    console.error('Error fetching Tree6 data:', error);
+    return [];
+  }
+})();
+
+
 export const tree = {
   id: 100,
   person: {
@@ -15,6 +46,8 @@ export const tree = {
   hasParent: true,
   children: [],
 }
+
+
 
 export const tree1 = [
   {
